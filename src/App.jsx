@@ -45,6 +45,20 @@ const voteAnecdote = (setVotes, votes, selected) => {
   setVotes(votesCopy)
 }
 
+const getMaxIndex = (votes) => {
+    let maxIndex = 0
+    for (let i = 1; i < votes.length; i++){
+      if (votes[i] > votes[maxIndex]) {
+        maxIndex = i
+      }
+      else {
+        continue
+      }
+    }
+    return maxIndex
+
+  }
+
 
 const App = () => {
   // save clicks of each button to its own state
@@ -72,7 +86,8 @@ const App = () => {
       <Button onClick={() => setBad(bad + 1)} text="Bad"/>
       <Button onClick={() => chooseAnecdote(anecdotes,setSelected)} text="Anecdote"/>
       <Button onClick={() => voteAnecdote(setVotes, votes, selected)} text="Vote"/>
-      <p>Anecdote: {anecdotes[selected]} Votes: {votes[selected]}</p>
+      <p>Anecdote: {anecdotes[selected]} Votes: {votes[selected]}<br/></p>
+      <p>Anecdote with most votes: {anecdotes[getMaxIndex(votes)]} Votes {votes[getMaxIndex(votes)]}</p>
       <h2>Results: <br/></h2>
       <Statistics  good = {good} neutral = {neutral} bad = {bad}/>
     </div>
