@@ -3,9 +3,11 @@ import { useState } from 'react'
 const Statistics = (props) => {
   const average = props.total === 0 ? 0 : (props.good - props.bad)/(props.total)
   const positive = props.total === 0 ? 0 : ((props.good)/(props.total))*100
-  return(
-    <p>Average: {average} <br/>Positive: {positive} %</p>
-  )
+  if (average == 0 && positive == 0 && props.neutral == 0) {
+    return(<h3>No feedback given.</h3>)
+  }
+  else {
+    return(<p>Average: {average} <br/>Positive: {positive} %</p>)}
 }
 
 const Button = (props) => {
