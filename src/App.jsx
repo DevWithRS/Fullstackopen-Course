@@ -39,13 +39,15 @@ const chooseAnecdote = (anecdotes,setSelected) => {
   setSelected(randomVal)
 }
 
+const voteAnecdote = (setVotes, votes, selected) => {
+  const votesCopy = [...votes]
+  votesCopy[selected]++
+  setVotes(votesCopy)
+}
+
 
 const App = () => {
   // save clicks of each button to its own state
-  const [good, setGood] = useState(0)
-  const [neutral, setNeutral] = useState(0)
-  const [bad, setBad] = useState(0)
-  const [selected, setSelected] = useState(0)
   const anecdotes = [
     'If it hurts, do it more often.',
     'Adding manpower to a late software project makes it later!',
@@ -56,6 +58,11 @@ const App = () => {
     'Programming without an extremely heavy use of console.log is same as if a doctor would refuse to use x-rays or blood tests when diagnosing patients.',
     'The only way to go fast, is to go well.'
   ]
+  const [good, setGood] = useState(0)
+  const [neutral, setNeutral] = useState(0)
+  const [bad, setBad] = useState(0)
+  const [selected, setSelected] = useState(0)
+  const [votes, setVotes] = useState(Array(anecdotes.length).fill(0))
 
   return (
     <div>
@@ -64,7 +71,8 @@ const App = () => {
       <Button onClick={() => setNeutral(neutral + 1)} text="Neutral"/>
       <Button onClick={() => setBad(bad + 1)} text="Bad"/>
       <Button onClick={() => chooseAnecdote(anecdotes,setSelected)} text="Anecdote"/>
-      <p>Anecdote: {anecdotes[selected]}</p>
+      <Button onClick={() => voteAnecdote(setVotes, votes, selected)} text="Vote"/>
+      <p>Anecdote: {anecdotes[selected]} Votes: {votes[selected]}</p>
       <h2>Results: <br/></h2>
       <Statistics  good = {good} neutral = {neutral} bad = {bad}/>
     </div>
