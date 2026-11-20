@@ -1,5 +1,40 @@
 import { useState } from 'react'
 
+const Filter = (props) => {
+  return(
+        <div>Search: 
+          <input 
+            value = {props.filter}
+            onChange = {props.handleSearch}/>
+        </div>)
+}
+
+const AddPersonForm = (props) => {
+  return(     
+      <form onSubmit={props.addPerson}>
+          <div>
+            name: <input 
+              value = {props.newName}
+              onChange ={props.handleNameChange} />
+          </div>
+          <div>
+            number: <input
+              value = {props.newNumber}
+              onChange = {props.handleNumberChange}/>
+          </div>
+          <div>
+            <button type="submit">add</button>
+          </div>
+        </form>)
+}
+
+const NumbersSection = (props) => {
+  return(<div>
+              <h2>Numbers: </h2>
+              <ul>{props.personToShow.map(person => <li key = {person.name}>{person.name} - {person.number}</li>)}</ul>
+          </div>)
+}
+
 const App = () => {
   const [persons, setPersons] = useState([
     { name: 'Arto Hellas', number: '040-123456', id: 1 },
@@ -43,29 +78,10 @@ const App = () => {
   return (
     <div>
       <h2>Phonebook</h2>
-      <div>Search: 
-        <input 
-          value = {filter}
-          onChange = {handleSearch}/>
-      </div>
+      <Filter filter = {filter} handleSearch = {handleSearch}/>
       <br/>
-      <form onSubmit={addPerson}>
-        <div>
-          name: <input 
-            value = {newName}
-            onChange ={handleNameChange} />
-        </div>
-        <div>
-          number: <input
-            value = {newNumber}
-            onChange = {handleNumberChange}/>
-        </div>
-        <div>
-          <button type="submit">add</button>
-        </div>
-      </form>
-      <h2>Numbers: </h2>
-      <ul>{personToShow.map(person => <li key = {person.name}>{person.name} - {person.number}</li>)}</ul>
+      <AddPersonForm addPerson = {addPerson} newName = {newName} handleNameChange = {handleNameChange} newNumber = {newNumber} handleNumberChange = {handleNumberChange}/>
+      <NumbersSection personToShow = {personToShow}/>
     </div>
   )
 }
